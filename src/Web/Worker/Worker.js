@@ -30,6 +30,14 @@ export function onMessage(f) {
   };
 }
 
+export function onMessageError(f) {
+  return function (worker) {
+    return function () {
+      worker.onmessageerror = f;
+    };
+  };
+}
+
 export function onError(f) {
   return function (worker) {
     return function () {

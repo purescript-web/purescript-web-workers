@@ -67,6 +67,8 @@ foreign import terminate :: Worker -> Effect Unit
 
 foreign import onMessage :: (MessageEvent -> Effect Unit) -> Worker -> Effect Unit
 
+foreign import onMessageError :: (MessageEvent -> Effect Unit) -> Worker -> Effect Unit
+
 foreign import onError :: (Event -> Effect Unit) -> Worker -> Effect Unit
 
 instance Show WorkerType where
