@@ -1,5 +1,4 @@
 -- https://developer.mozilla.org/en-US/docs/Web/API/WorkerLocation
-
 module Web.Worker.Location
   ( Location
   , hash
@@ -11,8 +10,7 @@ module Web.Worker.Location
   , port
   , protocol
   , search
-  )
-  where
+  ) where
 
 import Effect (Effect)
 

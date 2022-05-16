@@ -17,3 +17,21 @@ export function postMessage(data) {
 export function close() {
   self.close();
 }
+
+export function onMessage(f) {
+  return function () {
+    self.onmessage = f;
+  };
+}
+
+export function onMessageError(f) {
+  return function () {
+    self.onmessageerror = f;
+  };
+}
+
+export function onError(f) {
+  return function () {
+    self.onerror = f;
+  };
+}
