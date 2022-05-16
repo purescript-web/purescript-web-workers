@@ -8,9 +8,11 @@ export function navigator() {
   return self.navigator;
 }
 
-export function postMessage(data) {
-  return function () {
-    self.postMessage(data);
+export function _postMessage(data) {
+  return function(tr) {
+    return function () {
+      self.postMessage(data, tr.length > 0 ? tr : undefined);
+    };
   };
 }
 

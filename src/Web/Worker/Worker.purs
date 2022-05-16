@@ -8,6 +8,7 @@ module Web.Worker.Worker
   , new
   , defaultWorkerOptions
   , postMessage
+  , postMessage'
   , onError
   , onMessage
   , terminate
@@ -22,6 +23,7 @@ import Web.Event.Event (Event)
 import Web.Event.EventTarget (EventTarget)
 import Web.Internal.FFI (unsafeReadProtoTagged)
 import Web.Worker.MessageEvent (MessageEvent)
+import Web.Worker.Types (Transferable)
 
 foreign import data Worker :: Type
 
@@ -58,10 +60,13 @@ new url {name, type: t, credentials} = _new url
     }
 
 
-foreign import _postMessage :: forall msg tr. msg -> Array tr -> Worker -> Effect Unit
+foreign import _postMessage :: forall msg. msg -> Array Transferable -> Worker -> Effect Unit
 
 postMessage :: forall msg. msg -> Worker -> Effect Unit
 postMessage msg = _postMessage msg []
+
+postMessage' :: forall msg. msg -> Array Transferable -> Worker -> Effect Unit
+postMessage' = _postMessage
 
 foreign import terminate :: Worker -> Effect Unit
 
