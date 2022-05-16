@@ -29,3 +29,13 @@ export function onMessageError(f) {
     };
   };
 }
+
+export function _postMessage(data) {
+  return function (transfer) {
+    return function (worker) {
+      return function () {
+        worker.postMessage(data, transfer.length > 0 ? transfer : undefined);
+      };
+    };
+  };
+}
