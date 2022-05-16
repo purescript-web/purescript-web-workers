@@ -20,18 +20,24 @@ export function close() {
 
 export function onMessage(f) {
   return function () {
-    self.onmessage = f;
+    self.onmessage = function (ev) {
+      f(ev)();
+    };
   };
 }
 
 export function onMessageError(f) {
   return function () {
-    self.onmessageerror = f;
+    self.onmessageerror = function (ev) {
+      f(ev)();
+    };
   };
 }
 
 export function onError(f) {
   return function () {
-    self.onerror = f;
+    self.onerror = function (ev) {
+      f(ev)();
+    };
   };
 }

@@ -1,5 +1,4 @@
 -- https://developer.mozilla.org/en-US/docs/Web/API/WorkerNavigator
-
 module Web.Worker.GlobalScope
   ( close
   , location
@@ -8,8 +7,7 @@ module Web.Worker.GlobalScope
   , onMessage
   , onMessageError
   , postMessage
-  )
-  where
+  ) where
 
 import Prelude
 import Effect (Effect)

@@ -25,7 +25,9 @@ export function terminate (worker) {
 export function onMessage(f) {
   return function (worker) {
     return function () {
-      worker.onmessage = f;
+      worker.onmessage = function (ev) {
+        f(ev)();
+      };
     };
   };
 }
@@ -33,7 +35,9 @@ export function onMessage(f) {
 export function onMessageError(f) {
   return function (worker) {
     return function () {
-      worker.onmessageerror = f;
+      worker.onmessageerror = function (ev) {
+        f(ev)();
+      };
     };
   };
 }
@@ -41,7 +45,9 @@ export function onMessageError(f) {
 export function onError(f) {
   return function (worker) {
     return function () {
-      worker.onerror = f;
+      worker.onerror = function (ev) {
+        f(ev)();
+      };
     };
   };
 }
