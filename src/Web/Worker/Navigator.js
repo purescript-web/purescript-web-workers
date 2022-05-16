@@ -15,3 +15,9 @@ export function onLine(navigator) {
     return navigator.onLine;
   };
 }
+
+export function userAgent(navigator) {
+  return function () {
+    return navigator.userAgent;
+  };
+}

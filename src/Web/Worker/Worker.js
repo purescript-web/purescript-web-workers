@@ -1,4 +1,4 @@
-export function newImpl (src) {
+export function _new (src) {
   return function (opts) {
     return function () {
       return new Worker(src, opts);
@@ -6,7 +6,7 @@ export function newImpl (src) {
   };
 }
 
-export function postMessage(data) {
+export function _postMessage(data) {
   return function (transfer) {
     return function (worker) {
       return function () {

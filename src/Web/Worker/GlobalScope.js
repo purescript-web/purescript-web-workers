@@ -9,10 +9,8 @@ export function navigator() {
 }
 
 export function postMessage(data) {
-  return function (transfer) {
-    return function () {
-      self.postMessage(data, transfer.length > 0 ? transfer : undefined);
-    };
+  return function () {
+    self.postMessage(data);
   };
 }
 

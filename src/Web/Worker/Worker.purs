@@ -49,19 +49,20 @@ defaultWorkerOptions =
   , type: Classic
   }
 
---foreign import onError :: (Error -> Effect Unit) -> Worker -> Effect Unit
-
-foreign import newImpl :: String -> { name :: String, credentials :: String, type :: String } -> Effect Worker
+foreign import _new :: String -> { name :: String, credentials :: String, type :: String } -> Effect Worker
 
 new :: String -> WorkerOptions -> Effect Worker
-new url {name, type: t, credentials} = newImpl url
+new url {name, type: t, credentials} = _new url
     { name
     , credentials: show credentials
     , type: show t
     }
 
 
-foreign import postMessage :: forall msg tr. msg -> Array tr -> Worker -> Effect Unit
+foreign import _postMessage :: forall msg tr. msg -> Array tr -> Worker -> Effect Unit
+
+postMessage :: forall msg. msg -> Worker -> Effect Unit
+postMessage msg = _postMessage msg []
 
 foreign import terminate :: Worker -> Effect Unit
 

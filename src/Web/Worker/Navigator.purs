@@ -12,4 +12,6 @@ foreign import hardwareConcurrency :: Navigator -> Effect Int
 
 foreign import onLine :: Navigator -> Effect Boolean
 
--- connection
+foreign import userAgent :: Navigator -> Effect String
+
+-- todo: complete the list of attributes

@@ -11,6 +11,6 @@ foreign import location :: Effect Location
 
 foreign import navigator :: Effect Navigator
 
-foreign import postMessage :: forall msg tr. msg -> Array tr -> Effect Unit
+foreign import postMessage :: forall msg. msg -> Effect Unit
 
 foreign import close :: Effect Unit
