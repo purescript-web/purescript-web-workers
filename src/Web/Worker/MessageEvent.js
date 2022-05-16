@@ -9,3 +9,7 @@ export function origin(ev) {
 export function lastEventId(ev) {
   return ev.lastEventId;
 }
+
+export function ports(ev) {
+  return ev.ports;
+}

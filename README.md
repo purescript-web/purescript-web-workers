@@ -15,7 +15,7 @@ import Effect (Effect)
 import Control.Monad.Except (runExcept)
 import Foreign (readInt)
 import Web.Worker.GlobalScope (postMessage, onMessage)
-import Web.Worker.Event (data_)
+import Web.Worker.MessageEvent (data_)
 import Effect.Console (log)
 
 main :: Effect Unit
@@ -39,7 +39,7 @@ import Foreign (readInt)
 import Effect (Effect)
 import Effect.Console (log)
 import Web.Worker.Worker (defaultWorkerOptions, new, postMessage, onMessage)
-import Web.Worker.Event (data_)
+import Web.Worker.MessageEvent (data_)
 
 main :: Effect Unit
 main = do

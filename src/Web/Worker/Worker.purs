@@ -21,8 +21,7 @@ import Unsafe.Coerce (unsafeCoerce)
 import Web.Event.Event (Event)
 import Web.Event.EventTarget (EventTarget)
 import Web.Internal.FFI (unsafeReadProtoTagged)
-import Web.Worker.Event (MessageEvent)
-
+import Web.Worker.MessageEvent (MessageEvent)
 
 foreign import data Worker :: Type
 

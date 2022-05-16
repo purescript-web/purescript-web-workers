@@ -14,7 +14,7 @@ import Effect (Effect)
 import Web.Worker.Navigator (Navigator)
 import Web.Worker.Location (Location)
 import Web.Event.Event (Event)
-import Web.Worker.Event (MessageEvent)
+import Web.Worker.MessageEvent (MessageEvent)
 
 foreign import location :: Effect Location
 
