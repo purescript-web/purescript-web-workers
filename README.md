@@ -49,7 +49,6 @@ main = do
         Left _ -> log "Received data is not an integer"
         Right n -> do
           log $ "Received integer from worker: " <> show n
-  log "message received from worker"
   worker # postMessage 4
   worker # postMessage 5
 ```
