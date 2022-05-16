@@ -17,6 +17,3 @@ foreign import origin :: MessageEvent -> String
 foreign import lastEventId :: MessageEvent -> String
 
 foreign import ports :: MessageEvent -> Array MessagePort
-
--- source :: WindwProxy | MessagePort | ServiceWorker
--- ports :: Array MessagePort
