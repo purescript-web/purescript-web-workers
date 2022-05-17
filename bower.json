@@ -15,6 +15,7 @@
     ],
     "dependencies": {
         "purescript-effect": "^v4.0.0",
+        "purescript-foreign": "^v7.0.0",
         "purescript-maybe": "^v6.0.0",
         "purescript-prelude": "^v6.0.0",
         "purescript-web-events": "^v4.0.0"
