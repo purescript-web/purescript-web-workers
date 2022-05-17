@@ -1,17 +1,18 @@
 module Web.Worker.Worker
-  ( Worker
-  , WorkerType
-  , Credentials
+  ( Credentials
+  , Worker
   , WorkerOptions
-  , fromEventTarget
-  , toEventTarget
-  , new
+  , WorkerType
   , defaultWorkerOptions
-  , postMessage
-  , postMessage'
+  , fromEventTarget
+  , new
   , onError
   , onMessage
+  , onMessageError
+  , postMessage
+  , postMessage'
   , terminate
+  , toEventTarget
   )
   where
 
