@@ -32,9 +32,9 @@ export function onMessageError(f) {
 
 export function postMessageImpl(data) {
   return function (transfer) {
-    return function (worker) {
+    return function (port) {
       return function () {
-        worker.postMessage(data, transfer.length > 0 ? transfer : undefined);
+        port.postMessage(data, transfer.length > 0 ? transfer : undefined);
       };
     };
   };
