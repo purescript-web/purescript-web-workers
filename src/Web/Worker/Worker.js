@@ -6,7 +6,7 @@ export function _new (src) {
   };
 }
 
-export function _postMessage(data) {
+export function postMessageImpl(data) {
   return function (transfer) {
     return function (worker) {
       return function () {

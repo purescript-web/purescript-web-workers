@@ -60,13 +60,13 @@ new url {name, type: t, credentials} = _new url
     }
 
 
-foreign import _postMessage :: forall msg. msg -> Array Transferable -> Worker -> Effect Unit
+foreign import postMessageImpl :: forall msg. msg -> Array Transferable -> Worker -> Effect Unit
 
 postMessage :: forall msg. msg -> Worker -> Effect Unit
-postMessage msg = _postMessage msg []
+postMessage msg = postMessageImpl msg []
 
 postMessage' :: forall msg. msg -> Array Transferable -> Worker -> Effect Unit
-postMessage' = _postMessage
+postMessage' = postMessageImpl
 
 foreign import terminate :: Worker -> Effect Unit
 

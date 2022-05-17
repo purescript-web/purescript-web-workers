@@ -8,7 +8,7 @@ export function navigator() {
   return self.navigator;
 }
 
-export function _postMessage(data) {
+export function postMessageImpl(data) {
   return function(tr) {
     return function () {
       self.postMessage(data, tr.length > 0 ? tr : undefined);

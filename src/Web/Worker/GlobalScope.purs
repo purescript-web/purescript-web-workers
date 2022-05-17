@@ -1,4 +1,3 @@
--- https://developer.mozilla.org/en-US/docs/Web/API/WorkerNavigator
 module Web.Worker.GlobalScope
   ( close
   , location
@@ -22,13 +21,13 @@ foreign import location :: Effect Location
 
 foreign import navigator :: Effect Navigator
 
-foreign import _postMessage :: forall msg. msg -> Array Transferable -> Effect Unit
+foreign import postMessageImpl :: forall msg. msg -> Array Transferable -> Effect Unit
 
 postMessage :: forall msg. msg -> Effect Unit
-postMessage msg = _postMessage msg []
+postMessage msg = postMessageImpl msg []
 
 postMessage' :: forall msg. msg -> Array Transferable -> Effect Unit
-postMessage' = _postMessage
+postMessage' = postMessageImpl
 
 
 foreign import close :: Effect Unit
