@@ -47,8 +47,7 @@ main = do
   worker
     # onMessage \ev -> case runExcept $ readInt $ data_ ev of
         Left _ -> log "Received data is not an integer"
-        Right n -> do
-          log $ "Received integer from worker: " <> show n
+        Right n -> log $ "Received integer from worker: " <> show n
   worker # postMessage 4
   worker # postMessage 5
 ```
