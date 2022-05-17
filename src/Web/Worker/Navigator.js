@@ -4,6 +4,12 @@ export function language(navigator) {
   };
 }
 
+export function languages(navigator) {
+  return function () {
+    return navigator.languages;
+  };
+}
+
 export function hardwareConcurrency(navigator) {
   return function () {
     return navigator.hardwareConcurrency;
