@@ -2,6 +2,16 @@
 
 Type definitions and low level interface implementations for the [W3C Web Workers API](https://html.spec.whatwg.org/multipage/workers.html).
 
+### Install
+
+```
+spago install web-workers
+```
+
+### Documentation
+
+[Published on Pursuit](https://pursuit.purescript.org/packages/purescript-web-workers/)
+
 ### Example
 
 code for the worker
