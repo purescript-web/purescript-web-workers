@@ -1,14 +1,14 @@
 module Web.Worker.Worker
-  ( Credentials
+  ( Credentials(..)
   , Worker
   , WorkerOptions
-  , WorkerType
+  , WorkerType(..)
   , defaultWorkerOptions
   , fromEventTarget
   , new
-  , onError
   , onMessage
   , onMessageError
+  , onError
   , postMessage
   , postMessage'
   , terminate
