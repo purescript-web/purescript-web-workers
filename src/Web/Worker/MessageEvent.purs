@@ -4,6 +4,7 @@ module Web.Worker.MessageEvent
   , data_
   , lastEventId
   , origin
+  , ports
   , module Types
   )
   where

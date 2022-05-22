@@ -13,8 +13,7 @@ module Web.Worker.Worker
   , postMessage'
   , terminate
   , toEventTarget
-  )
-  where
+  ) where
 
 import Prelude
 import Data.Maybe (Maybe)
@@ -28,21 +27,26 @@ import Web.Worker.Types (Transferable)
 
 foreign import data Worker :: Type
 
-
 fromEventTarget :: EventTarget -> Maybe Worker
 fromEventTarget = unsafeReadProtoTagged "Worker"
 
 toEventTarget :: Worker -> EventTarget
 toEventTarget = unsafeCoerce
 
-data WorkerType = Classic | Module
-data Credentials = Omit | SameOrigin | Include
+data WorkerType
+  = Classic
+  | Module
 
-type WorkerOptions =
-  { credentials :: Credentials
-  , name :: String
-  , type :: WorkerType 
-  }
+data Credentials
+  = Omit
+  | SameOrigin
+  | Include
+
+type WorkerOptions
+  = { credentials :: Credentials
+    , name :: String
+    , type :: WorkerType
+    }
 
 defaultWorkerOptions :: WorkerOptions
 defaultWorkerOptions =
@@ -54,12 +58,12 @@ defaultWorkerOptions =
 foreign import _new :: String -> { name :: String, credentials :: String, type :: String } -> Effect Worker
 
 new :: String -> WorkerOptions -> Effect Worker
-new url {name, type: t, credentials} = _new url
+new url { name, type: t, credentials } =
+  _new url
     { name
     , credentials: show credentials
     , type: show t
     }
-
 
 foreign import postMessageImpl :: forall msg. msg -> Array Transferable -> Worker -> Effect Unit
 
