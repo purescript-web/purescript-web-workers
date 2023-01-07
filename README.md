@@ -36,6 +36,10 @@ main = do
       Right n -> postMessage $ n * n
 ```
 
+The worker must be compiled into a separate js file.
+```
+spago bundle-app -m Test.Worker --to worker.js
+```
 
 main code
 
@@ -61,3 +65,4 @@ main = do
   worker # postMessage 4
   worker # postMessage 5
 ```
+
