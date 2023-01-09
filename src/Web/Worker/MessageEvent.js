@@ -13,3 +13,11 @@ export function lastEventId(ev) {
 export function ports(ev) {
   return ev.ports;
 }
+
+export function sourceImpl(just) {
+  return function (nothing) {
+    return function (ev) {
+      return ev.source == null ? nothing : just(ev.source);
+    }
+  }
+}

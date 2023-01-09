@@ -5,11 +5,12 @@ module Web.Worker.MessageEvent
   , lastEventId
   , origin
   , ports
+  , source
   , module Types
   )
   where
 
-import Data.Maybe (Maybe)
+import Data.Maybe (Maybe(..))
 import Foreign (Foreign)
 import Web.Event.Event (Event)
 import Web.Internal.FFI (unsafeReadProtoTagged)
@@ -30,3 +31,8 @@ foreign import origin :: MessageEvent -> String
 foreign import lastEventId :: MessageEvent -> String
 
 foreign import ports :: MessageEvent -> Array MessagePort
+
+foreign import sourceImpl :: forall a. (a -> Maybe a) -> Maybe a -> MessageEvent -> Maybe MessagePort
+
+source :: MessageEvent -> Maybe MessagePort
+source = sourceImpl Just Nothing

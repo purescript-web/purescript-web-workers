@@ -1,10 +1,6 @@
 -- | This module contains function to create and control workers from the parent's worker
 module Web.Worker.Worker
-  ( Credentials(..)
-  , Worker
-  , WorkerOptions
-  , WorkerType(..)
-  , defaultWorkerOptions
+  ( Worker
   , fromEventTarget
   , new
   , onMessage
@@ -25,6 +21,7 @@ import Web.Event.EventTarget (EventTarget)
 import Web.Internal.FFI (unsafeReadProtoTagged)
 import Web.Worker.MessageEvent (MessageEvent)
 import Web.Worker.Types (Transferable)
+import Web.Worker.Options (WorkerOptions, toJsOptions)
 
 foreign import data Worker :: Type
 
@@ -34,38 +31,11 @@ fromEventTarget = unsafeReadProtoTagged "Worker"
 toEventTarget :: Worker -> EventTarget
 toEventTarget = unsafeCoerce
 
-data WorkerType
-  = Classic
-  | Module
-
-data Credentials
-  = Omit
-  | SameOrigin
-  | Include
-
-type WorkerOptions
-  = { credentials :: Credentials
-    , name :: String
-    , type :: WorkerType
-    }
-
-defaultWorkerOptions :: WorkerOptions
-defaultWorkerOptions =
-  { name: ""
-  , credentials: Omit
-  , type: Classic
-  }
-
 foreign import _new :: String -> { name :: String, credentials :: String, type :: String } -> Effect Worker
 
 -- | creates a worker object that executes the script at the specified URL. 
 new :: String -> WorkerOptions -> Effect Worker
-new url { name, type: t, credentials } =
-  _new url
-    { name
-    , credentials: show credentials
-    , type: show t
-    }
+new url options = _new url (toJsOptions options)
 
 foreign import postMessageImpl :: forall msg. msg -> Array Transferable -> Worker -> Effect Unit
 
@@ -88,14 +58,3 @@ foreign import onMessageError :: (MessageEvent -> Effect Unit) -> Worker -> Effe
 
 -- | fired when an error occurs in the worker.
 foreign import onError :: (Event -> Effect Unit) -> Worker -> Effect Unit
-
-instance Show WorkerType where
-  show = case _ of
-    Classic -> "classic"
-    Module  -> "module"
-
-instance Show Credentials where
-  show = case _ of
-    Omit       -> "omit"
-    SameOrigin -> "same-origin"
-    Include    -> "include"
