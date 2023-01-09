@@ -1,7 +1,7 @@
 export function _new (src) {
   return function (opts) {
     return function () {
-      return new Worker(src, opts);
+      return new SharedWorker(src, opts);
     };
   };
 }
