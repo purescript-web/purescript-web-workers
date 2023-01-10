@@ -5,18 +5,23 @@ module Web.Worker.SharedWorker
   , onError
   , port
   , toEventTarget
+  , module Options
   )
   where
 
 import Prelude
+
 import Data.Maybe (Maybe)
 import Effect (Effect)
 import Unsafe.Coerce (unsafeCoerce)
-import Web.Worker.Options (WorkerOptions, toJsOptions)
-import Web.Worker.Types (MessagePort)
 import Web.Event.Event (Event)
 import Web.Event.EventTarget (EventTarget)
 import Web.Internal.FFI (unsafeReadProtoTagged)
+import Web.Worker.Options (WorkerOptions, Credentials(..),
+                          WorkerType(..), defaultWorkerOptions
+                          ) as Options
+import Web.Worker.Options (WorkerOptions, toJsOptions)
+import Web.Worker.Types (MessagePort)
 
 foreign import data SharedWorker :: Type
 

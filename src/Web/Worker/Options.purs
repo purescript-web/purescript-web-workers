@@ -1,4 +1,11 @@
-module Web.Worker.Options where
+module Web.Worker.Options
+  ( Credentials(..)
+  , WorkerOptions
+  , WorkerType(..)
+  , defaultWorkerOptions
+  , toJsOptions
+  )
+  where
 
 import Prelude
 
@@ -21,11 +28,6 @@ defaultWorkerOptions =
   { name: ""
   , type: Classic
   }
-
-instance Show WorkerType where
-  show = case _ of
-    Classic -> "classic"
-    Module _ -> "module"
 
 instance Show Credentials where
   show = case _ of

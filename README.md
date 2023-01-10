@@ -24,7 +24,7 @@ import Data.Either (Either(..))
 import Effect (Effect)
 import Control.Monad.Except (runExcept)
 import Foreign (readInt)
-import Web.Worker.GlobalScope (postMessage, onMessage)
+import Web.Worker.DedicatedWorkerGlobalScope (postMessage, onMessage)
 import Web.Worker.MessageEvent (data_)
 import Effect.Console (log)
 

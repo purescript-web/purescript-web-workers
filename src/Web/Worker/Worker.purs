@@ -10,6 +10,7 @@ module Web.Worker.Worker
   , postMessage'
   , terminate
   , toEventTarget
+  , module Options
   ) where
 
 import Prelude
@@ -22,6 +23,9 @@ import Web.Internal.FFI (unsafeReadProtoTagged)
 import Web.Worker.MessageEvent (MessageEvent)
 import Web.Worker.Types (Transferable)
 import Web.Worker.Options (WorkerOptions, toJsOptions)
+import Web.Worker.Options (WorkerOptions, Credentials(..),
+                          WorkerType(..), defaultWorkerOptions
+                          ) as Options
 
 foreign import data Worker :: Type
 
