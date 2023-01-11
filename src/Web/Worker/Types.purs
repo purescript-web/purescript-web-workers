@@ -3,8 +3,8 @@ module Web.Worker.Types
   , MessagePort
   , Transferable
   , class IsSendable
-  )
-  where
+  ) where
+
 import Prim.RowList (class RowToList, RowList)
 import Prim.RowList as Row
 
