@@ -25,7 +25,7 @@ import Web.Internal.FFI (unsafeReadProtoTagged)
 import Web.Worker.MessageEvent (MessageEvent)
 import Web.Worker.Options (WorkerOptions, Credentials(..), WorkerType(..), defaultWorkerOptions) as Options
 import Web.Worker.Options (WorkerOptions, toJsOptions)
-import Web.Worker.Types (Transferable)
+import Web.Worker.Types (class IsSendable, Transferable)
 
 foreign import data Worker :: Type
 
@@ -44,10 +44,10 @@ new url options = runEffectFn2 newImpl url (toJsOptions options)
 foreign import postMessageImpl :: forall msg. EffectFn3 Worker msg (Array Transferable) Unit
 
 -- | sends a message to the worker's inner scope. 
-postMessage :: forall msg. msg -> Worker -> Effect Unit
+postMessage :: forall msg. IsSendable msg => msg -> Worker -> Effect Unit
 postMessage msg worker = postMessage' msg [] worker
 
-postMessage' :: forall msg. msg -> Array Transferable -> Worker -> Effect Unit
+postMessage' :: forall msg. IsSendable msg => msg -> Array Transferable -> Worker -> Effect Unit
 postMessage' msg tr worker = runEffectFn3 postMessageImpl worker msg tr
 
 -- | immediately terminates the worker.
