@@ -7,22 +7,36 @@ module Web.Worker.Navigator
   , languages
   , onLine
   , userAgent
-  )
-  where
+  ) where
 
 import Effect (Effect)
+import Effect.Uncurried (EffectFn1, runEffectFn1)
 
 foreign import data Navigator :: Type
 
-foreign import language :: Navigator -> Effect String
+language :: Navigator -> Effect String
+language nav = runEffectFn1 languageImpl nav
 
-foreign import languages :: Navigator -> Effect (Array String)
+foreign import languageImpl :: EffectFn1 Navigator String
 
-foreign import hardwareConcurrency :: Navigator -> Effect Int
+languages :: Navigator -> Effect (Array String)
+languages nav = runEffectFn1 languagesImpl nav
 
-foreign import onLine :: Navigator -> Effect Boolean
+foreign import languagesImpl :: EffectFn1 Navigator (Array String)
 
-foreign import userAgent :: Navigator -> Effect String
+hardwareConcurrency :: Navigator -> Effect Int
+hardwareConcurrency nav = runEffectFn1 hardwareConcurrencyImpl nav
 
+foreign import hardwareConcurrencyImpl :: EffectFn1 Navigator Int
+
+onLine :: Navigator -> Effect Boolean
+onLine nav = runEffectFn1 onLineImpl nav
+
+foreign import onLineImpl :: EffectFn1 Navigator Boolean
+
+userAgent :: Navigator -> Effect String
+userAgent nav = runEffectFn1 userAgentImpl nav
+
+foreign import userAgentImpl :: EffectFn1 Navigator String
 
 -- todo: complete the list of attributes

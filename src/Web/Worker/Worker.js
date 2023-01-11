@@ -1,53 +1,23 @@
-export function _new (src) {
-  return function (opts) {
-    return function () {
-      return new Worker(src, opts);
-    };
-  };
+export function newImpl(src, opts) {
+  return new Worker(src, opts);
 }
 
-export function postMessageImpl(data) {
-  return function (transfer) {
-    return function (worker) {
-      return function () {
-        worker.postMessage(data, transfer.length > 0 ? transfer : undefined);
-      };
-    };
-  };
+export function postMessageImpl(worker, data, transfer) {
+  worker.postMessage(data, transfer.length > 0 ? transfer : undefined);
 }
 
-export function terminate (worker) {
-  return function () {
-    worker.terminate();
-  };
+export function terminateImpl(worker) {
+  worker.terminate();
 }
 
-export function onMessage(f) {
-  return function (worker) {
-    return function () {
-      worker.onmessage = function (ev) {
-        f(ev)();
-      };
-    };
-  };
+export function onMessageImpl(worker, f) {
+  worker.onmessage = f;
 }
 
-export function onMessageError(f) {
-  return function (worker) {
-    return function () {
-      worker.onmessageerror = function (ev) {
-        f(ev)();
-      };
-    };
-  };
+export function onMessageErrorImpl(worker, f) {
+  worker.onmessageerror = f;
 }
 
-export function onError(f) {
-  return function (worker) {
-    return function () {
-      worker.onerror = function (ev) {
-        f(ev)();
-      };
-    };
-  };
+export function onErrorImpl(worker, f) {
+  worker.onerror = f;
 }

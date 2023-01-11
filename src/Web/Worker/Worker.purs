@@ -14,18 +14,18 @@ module Web.Worker.Worker
   ) where
 
 import Prelude
+
 import Data.Maybe (Maybe)
 import Effect (Effect)
+import Effect.Uncurried (EffectFn1, EffectFn2, EffectFn3, mkEffectFn1, runEffectFn1, runEffectFn2, runEffectFn3)
 import Unsafe.Coerce (unsafeCoerce)
 import Web.Event.Event (Event)
 import Web.Event.EventTarget (EventTarget)
 import Web.Internal.FFI (unsafeReadProtoTagged)
 import Web.Worker.MessageEvent (MessageEvent)
-import Web.Worker.Types (Transferable)
+import Web.Worker.Options (WorkerOptions, Credentials(..), WorkerType(..), defaultWorkerOptions) as Options
 import Web.Worker.Options (WorkerOptions, toJsOptions)
-import Web.Worker.Options (WorkerOptions, Credentials(..),
-                          WorkerType(..), defaultWorkerOptions
-                          ) as Options
+import Web.Worker.Types (Transferable)
 
 foreign import data Worker :: Type
 
@@ -35,30 +35,42 @@ fromEventTarget = unsafeReadProtoTagged "Worker"
 toEventTarget :: Worker -> EventTarget
 toEventTarget = unsafeCoerce
 
-foreign import _new :: String -> { name :: String, credentials :: String, type :: String } -> Effect Worker
+foreign import newImpl :: EffectFn2 String { name :: String, credentials :: String, type :: String } Worker
 
 -- | creates a worker object that executes the script at the specified URL. 
 new :: String -> WorkerOptions -> Effect Worker
-new url options = _new url (toJsOptions options)
+new url options = runEffectFn2 newImpl url (toJsOptions options)
 
-foreign import postMessageImpl :: forall msg. msg -> Array Transferable -> Worker -> Effect Unit
+foreign import postMessageImpl :: forall msg. EffectFn3 Worker msg (Array Transferable) Unit
 
 -- | sends a message to the worker's inner scope. 
 postMessage :: forall msg. msg -> Worker -> Effect Unit
-postMessage msg = postMessageImpl msg []
+postMessage msg worker = postMessage' msg [] worker
 
 postMessage' :: forall msg. msg -> Array Transferable -> Worker -> Effect Unit
-postMessage' = postMessageImpl
+postMessage' msg tr worker = runEffectFn3 postMessageImpl worker msg tr
 
 -- | immediately terminates the worker.
 -- | This does not offer the worker an opportunity to finish its operations; it is stopped at once.
-foreign import terminate :: Worker -> Effect Unit
+terminate :: Worker -> Effect Unit
+terminate worker = runEffectFn1 terminateImpl worker
+
+foreign import terminateImpl :: EffectFn1 Worker Unit
 
 -- | fired when the worker's parent receives a message from its worker
-foreign import onMessage :: (MessageEvent -> Effect Unit) -> Worker -> Effect Unit
+onMessage :: (MessageEvent -> Effect Unit) -> Worker -> Effect Unit
+onMessage cb worker = runEffectFn2 onMessageImpl worker (mkEffectFn1 cb)
+
+foreign import onMessageImpl :: EffectFn2 Worker (EffectFn1 MessageEvent Unit) Unit
 
 -- | fired when the worker's parent receives a message that can't be deserialized.
-foreign import onMessageError :: (MessageEvent -> Effect Unit) -> Worker -> Effect Unit
+onMessageError :: (MessageEvent -> Effect Unit) -> Worker -> Effect Unit
+onMessageError cb worker = runEffectFn2 onMessageErrorImpl worker (mkEffectFn1 cb)
+
+foreign import onMessageErrorImpl :: EffectFn2 Worker (EffectFn1 MessageEvent Unit) Unit
 
 -- | fired when an error occurs in the worker.
-foreign import onError :: (Event -> Effect Unit) -> Worker -> Effect Unit
+onError :: (Event -> Effect Unit) -> Worker -> Effect Unit
+onError cb worker = runEffectFn2 onErrorImpl worker (mkEffectFn1 cb)
+
+foreign import onErrorImpl :: EffectFn2 Worker (EffectFn1 Event Unit) Unit

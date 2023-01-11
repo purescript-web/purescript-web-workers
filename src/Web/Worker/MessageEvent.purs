@@ -7,16 +7,16 @@ module Web.Worker.MessageEvent
   , ports
   , source
   , module Types
-  )
-  where
+  ) where
 
+import Data.Function.Uncurried (Fn3, runFn3)
 import Data.Maybe (Maybe(..))
 import Foreign (Foreign)
+import Unsafe.Coerce (unsafeCoerce)
 import Web.Event.Event (Event)
 import Web.Internal.FFI (unsafeReadProtoTagged)
 import Web.Worker.Types (MessageEvent) as Types
 import Web.Worker.Types (MessageEvent, MessagePort)
-import Unsafe.Coerce (unsafeCoerce)
 
 fromEvent :: Event -> Maybe MessageEvent
 fromEvent = unsafeReadProtoTagged "MessageEvent"
@@ -32,7 +32,7 @@ foreign import lastEventId :: MessageEvent -> String
 
 foreign import ports :: MessageEvent -> Array MessagePort
 
-foreign import sourceImpl :: forall a. (a -> Maybe a) -> Maybe a -> MessageEvent -> Maybe MessagePort
+foreign import sourceImpl :: Fn3 (forall a. a -> Maybe a) (forall a. Maybe a) MessageEvent (Maybe MessagePort)
 
 source :: MessageEvent -> Maybe MessagePort
-source = sourceImpl Just Nothing
+source msg = runFn3 sourceImpl Just Nothing msg

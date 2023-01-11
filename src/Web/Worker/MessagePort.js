@@ -1,41 +1,19 @@
-export function close(port) {
-  return function () {
-    port.close();
-  };
+export function closeImpl(port) {
+  port.close();
 }
 
-export function start(port) {
-  return function () {
-    port.start();
-  };
+export function startImpl(port) {
+  port.start();
 }
 
-export function onMessage(f) {
-  return function (port) {
-    return function () {
-      port.onmessage = function (ev) {
-        f(ev)();
-      };
-    };
-  };
+export function onMessageImpl(port, f) {
+  port.onmessage = f;
 }
 
-export function onMessageError(f) {
-  return function (port) {
-    return function () {
-      port.onmessageerror = function (ev) {
-        f(ev)();
-      };
-    };
-  };
+export function onMessageErrorImpl(port, f) {
+  port.onmessageerror = f;
 }
 
-export function postMessageImpl(data) {
-  return function (transfer) {
-    return function (port) {
-      return function () {
-        port.postMessage(data, transfer.length > 0 ? transfer : undefined);
-      };
-    };
-  };
+export function postMessageImpl(port, data, transfer) {
+  port.postMessage(data, transfer.length > 0 ? transfer : undefined);
 }
