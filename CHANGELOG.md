@@ -15,6 +15,7 @@ Bugfixes:
 Other improvements:
 - Added documentation
 - Dropped `bower.json` file
+- Updated FFI to use `EffectFnX` types
 - Added CI and GitHub issue/pr templates
 - Added `purs-tidy` formatter to CI
 
