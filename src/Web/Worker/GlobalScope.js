@@ -1,9 +1,7 @@
 /* @globals self */
 
-export function importScripts (urls) {
-  return function () {
-    self.importScripts(...urls);
-  }
+export function importScriptsImpl(urls) {
+  self.importScripts(...urls);
 }
 
 export function location() {
@@ -14,50 +12,26 @@ export function navigator() {
   return self.navigator;
 }
 
-export function onError(f) {
-  return function () {
-    self.onerror = function (ev) {
-      f(ev)();
-    };
-  };
+export function onErrorImpl(f) {
+  self.onerror = f;
 }
 
-export function onLanguageChange(f) {
-  return function () {
-    self.onlanguagechange = function (ev) {
-      f(ev)();
-    };
-  };
+export function onLanguageChangeImpl(f) {
+  self.onlanguagechange = f;
 }
 
-export function onOffline(f) {
-  return function () {
-    self.onoffline = function (ev) {
-      f(ev)();
-    };
-  };
+export function onOfflineImpl(f) {
+  self.onoffline = f;
 }
 
-export function onOnline(f) {
-  return function () {
-    self.ononline = function (ev) {
-      f(ev)();
-    };
-  };
+export function onOnlineImpl(f) {
+  self.ononline = f;
 }
 
-export function onRejectionHandled(f) {
-  return function () {
-    self.onrejectionhandled = function (ev) {
-      f(ev)();
-    };
-  };
+export function onRejectionHandledImpl(f) {
+  self.onrejectionhandled = f;
 }
 
-export function onUnhandledRejection(f) {
-  return function () {
-    self.onunhandledrejection = function (ev) {
-      f(ev)();
-    };
-  };
+export function onUnhandledRejectionImpl(f) {
+  self.onunhandledrejection = f;
 }

@@ -1,23 +1,11 @@
-export function _new (src) {
-  return function (opts) {
-    return function () {
-      return new SharedWorker(src, opts);
-    };
-  };
+export function newImpl(src, opts) {
+  return new SharedWorker(src, opts);
 }
 
-export function port (worker) {
-  return function () {
-    return worker.port;
-  }
+export function portImpl(worker) {
+  return worker.port;
 }
 
-export function onError(f) {
-  return function (worker) {
-    return function () {
-      worker.onerror = function (ev) {
-        f(ev)();
-      };
-    };
-  };
+export function onErrorImpl(worker, f) {
+  worker.onerror = f;
 }

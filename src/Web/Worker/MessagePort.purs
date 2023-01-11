@@ -6,24 +6,39 @@ module Web.Worker.MessagePort
   , postMessage'
   , start
   , close
-  )
-  where
+  ) where
 
 import Prelude
+
 import Effect (Effect)
+import Effect.Uncurried (EffectFn1, EffectFn2, EffectFn3, mkEffectFn1, runEffectFn1, runEffectFn2, runEffectFn3)
 import Web.Worker.Types (MessageEvent, MessagePort, Transferable)
 import Web.Worker.Types (MessagePort) as Types
 
-foreign import onMessage :: (MessageEvent -> Effect Unit) -> MessagePort -> Effect Unit
-foreign import onMessageError :: (MessageEvent -> Effect Unit) -> MessagePort -> Effect Unit
+onMessage :: (MessageEvent -> Effect Unit) -> MessagePort -> Effect Unit
+onMessage cb port = runEffectFn2 onMessageImpl port (mkEffectFn1 cb)
 
-foreign import postMessageImpl :: forall msg. msg -> Array Transferable -> MessagePort -> Effect Unit
+foreign import onMessageImpl :: EffectFn2 MessagePort (EffectFn1 MessageEvent Unit) Unit
+
+onMessageError :: (MessageEvent -> Effect Unit) -> MessagePort -> Effect Unit
+onMessageError cb port = runEffectFn2 onMessageErrorImpl port (mkEffectFn1 cb)
+
+foreign import onMessageErrorImpl :: EffectFn2 MessagePort (EffectFn1 MessageEvent Unit) Unit
+
+foreign import postMessageImpl :: forall msg. EffectFn3 MessagePort msg (Array Transferable) Unit
 
 postMessage :: forall msg. msg -> MessagePort -> Effect Unit
-postMessage msg = postMessageImpl msg []
+postMessage msg port = postMessage' msg [] port
 
 postMessage' :: forall msg. msg -> Array Transferable -> MessagePort -> Effect Unit
-postMessage' = postMessageImpl
+postMessage' msg data_ port = runEffectFn3 postMessageImpl port msg data_
 
-foreign import close :: MessagePort -> Effect Unit
-foreign import start :: MessagePort -> Effect Unit
+close :: MessagePort -> Effect Unit
+close port = runEffectFn1 closeImpl port
+
+foreign import closeImpl :: EffectFn1 MessagePort Unit
+
+start :: MessagePort -> Effect Unit
+start port = runEffectFn1 startImpl port
+
+foreign import startImpl :: EffectFn1 MessagePort Unit
