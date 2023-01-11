@@ -6,9 +6,11 @@ Notable changes to this project are documented in this file. The format is based
 
 Breaking changes:
 - Refactored `Worker` to better match the spec
+- Refactored `Credentials`' `Show` instance to be more `Show`-like; use `printCredentials` now
 
 New features:
 - Added `SharedWorker` bindings
+- Added `Show` instance to `WorkerType`
 
 Bugfixes:
 
