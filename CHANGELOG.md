@@ -13,8 +13,10 @@ New features:
 Bugfixes:
 
 Other improvements:
-- added documentation
-- dropped `bower.json` file
+- Added documentation
+- Dropped `bower.json` file
+- Added CI and GitHub issue/pr templates
+- Added `purs-tidy` formatter to CI
 
 ## [v1.1.0](https://github.com/purescript-web/purescript-web-workers/releases/tag/v1.1.0) - 2022-05-2
 
