@@ -2,7 +2,11 @@ module Web.Worker.Types
   ( MessageEvent
   , MessagePort
   , Transferable
+  , SendWrapper
   , class IsSendable
+  , wrap
+  , unwrap
+  , unsafeWrap
   ) where
 
 import Prelude
