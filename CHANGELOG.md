@@ -5,7 +5,7 @@ Notable changes to this project are documented in this file. The format is based
 ## [Unreleased]
 
 Breaking changes:
-- The data argument of functions `postMessage` and `postMessage'` must be instance of a new typeclass `isSendable`  
+- The data argument of functions `postMessage` and `postMessage'` must be instance of a new typeclass `IsSendable`  
 - Refactored `Worker` to better match the spec
 - Refactored `Credentials`' `Show` instance to be more `Show`-like; use `printCredentials` now
 
