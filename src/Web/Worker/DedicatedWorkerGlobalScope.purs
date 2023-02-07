@@ -14,15 +14,15 @@ import Effect (Effect)
 import Effect.Uncurried (EffectFn1, EffectFn2, mkEffectFn1, runEffectFn1, runEffectFn2)
 import Web.Worker.GlobalScope (importScripts, location, navigator, onError, onLanguageChange, onOffline, onOnline, onRejectionHandled, onUnhandledRejection) as GlobalScope
 import Web.Worker.MessageEvent (MessageEvent)
-import Web.Worker.Types (Transferable)
+import Web.Worker.Types (class IsSendable, Transferable)
 
 foreign import name :: Effect String
 
 -- | sends a message to the main thread that spawned it.
-postMessage :: forall msg. msg -> Effect Unit
+postMessage :: forall msg. IsSendable msg => msg -> Effect Unit
 postMessage msg = postMessage' msg []
 
-postMessage' :: forall msg. msg -> Array Transferable -> Effect Unit
+postMessage' :: forall msg. IsSendable msg => msg -> Array Transferable -> Effect Unit
 postMessage' msg tr = runEffectFn2 postMessageImpl msg tr
 
 foreign import postMessageImpl :: forall msg. EffectFn2 msg (Array Transferable) Unit
