@@ -38,7 +38,7 @@ main = do
 
 The worker must be compiled to a separate js file.
 ```
-spago bundle-app -m Test.Worker --to worker.js
+spago bundle --bundle-type app --platform browser --module Test.Worker --outfile worker.js
 ```
 
 main code
@@ -65,4 +65,3 @@ main = do
   worker # postMessage 4
   worker # postMessage 5
 ```
-
