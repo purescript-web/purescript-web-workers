@@ -1,9 +1,9 @@
 export function data_(ev) {
-  return ev.data; 
+  return ev.data;
 }
 
 export function origin(ev) {
-  return ev.origin; 
+  return ev.origin;
 }
 
 export function lastEventId(ev) {
