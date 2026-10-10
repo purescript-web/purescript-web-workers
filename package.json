@@ -1,14 +1,16 @@
 {
     "private": true,
     "scripts": {
-        "clean": "rimraf output && rimraf .pulp-cache",
-        "build": "eslint src && spago build"
+        "build": "spago build --pedantic-packages",
+        "lint": "oxlint --deny-warnings src",
+        "format": "purs-tidy format-in-place src && oxfmt 'src/**/*.js'",
+        "format:check": "purs-tidy check src && oxfmt --check 'src/**/*.js'"
     },
     "devDependencies": {
-        "eslint": "^8.15.0",
-        "pulp": "^16.0.1",
-        "purescript-psa": "^0.8.2",
-        "rimraf": "^3.0.2",
-        "spago": "^0.20.9"
+        "oxfmt": "0.72.0",
+        "oxlint": "1.87.0",
+        "purescript": "0.15.16",
+        "purs-tidy": "0.11.1",
+        "spago": "1.0.4"
     }
 }
